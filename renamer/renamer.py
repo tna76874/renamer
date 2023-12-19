@@ -7,6 +7,8 @@ import argparse
 import os
 import glob2
 from parse import parse
+from functools import reduce
+
 
 class renamer:
     def __init__(self, **kwargs):
@@ -26,9 +28,9 @@ class renamer:
             if not isinstance(r,type(None)):
                 if isinstance(self.args['rename'],type(None)): self.args['rename'] = self.args['pattern']
                 parsed = r.named
+                max_digits = max(reduce(lambda d, kv: {**d, kv[0]: max(len(kv[1]) if kv[1].isdigit() else 0, d.get(kv[0], 0))}, parsed.items(), {}).values(), default=0)
                 
-                if self.args['no_integer']:
-                    parsed = { k:"{:02d}".format(int(v)) for k,v in parsed.items()}
+                parsed = {k: f"{{:0{max_digits}d}}".format(int(v)) if v.isdigit() else v for k, v in parsed.items()}
 
                 basename_new = self.args['rename'].format(**parsed)
                 new_file_path = os.path.join(dirname,basename_new)
@@ -47,7 +49,7 @@ def main(headless=True):
     parser.add_argument("-d", "--directory", type=dir_file, help="Path to batch rename dir", default=os.path.join(os.getcwd()))
     parser.add_argument("-p", "--pattern", help='Pattern of renaming. E.g. Real_Humans_-_Echte_Menschen_-_Staffel_{season}_({episode}_10).mp4', type=str, required=True)
     parser.add_argument("-r", "--rename", help='Rename into pattern. E.g. Real_Humans_S{season}E{episode}.mp4', type=str, default=None)
-    parser.add_argument("-i", "--no-integer", help="Do not convert parsed items into integers", action="store_false")
+    parser.add_argument("-i", "--no-integer", help="depreciated - no longer useful", action="store_false")
     args = vars(parser.parse_args())
 
     args = parser.parse_args()
@@ -57,4 +59,4 @@ def main(headless=True):
     else: return renamer(**vars(args))
 
 if __name__ == "__main__":   
-    rnm = main(headless=False)
+    self = main(headless=False)
