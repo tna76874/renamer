@@ -34,7 +34,7 @@ class renamer:
 
                 basename_new = self.args['rename'].format(**parsed)
                 new_file_path = os.path.join(dirname,basename_new)
-                os.rename(i,new_file_path)
+                if not self.args['no_action']: os.rename(i,new_file_path)
                 print("Renamed: {old} --> {new}".format(old=basename,new=basename_new))
 
 
@@ -50,6 +50,7 @@ def main(headless=True):
     parser.add_argument("-p", "--pattern", help='Pattern of renaming. E.g. Real_Humans_-_Echte_Menschen_-_Staffel_{season}_({episode}_10).mp4', type=str, required=True)
     parser.add_argument("-r", "--rename", help='Rename into pattern. E.g. Real_Humans_S{season}E{episode}.mp4', type=str, default=None)
     parser.add_argument("-i", "--no-integer", help="depreciated - no longer useful", action="store_false")
+    parser.add_argument("-n", "--no-action", help="just print what would be renamed", action="store_true")
     args = vars(parser.parse_args())
 
     args = parser.parse_args()
