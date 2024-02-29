@@ -30,7 +30,7 @@ class renamer:
                 parsed = r.named
                 
                 if isinstance(self.args['max_digits'],type(None)):
-                    max_digits = max(reduce(lambda d, kv: {**d, kv[0]: max(len(kv[1]) if kv[1].isdigit() else 0, d.get(kv[0], 0))}, parsed.items(), {}).values(), default=0)
+                    max_digits = max(reduce(lambda d, kv: {**d, kv[0]: max(len(kv[1]) if str(kv[1]).isdigit() else 0, d.get(kv[0], 0))}, parsed.items(), {}).values(), default=0)
                 else:
                     max_digits = int(self.args['max_digits'])
                     
