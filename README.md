@@ -27,15 +27,19 @@ pip3 install --upgrade .
 #### Usage
 
 ```usage: renamer [-h] [-d DIRECTORY] -p PATTERN [-r RENAME] [-i]
-usage: renamer [-h] [-d DIRECTORY] -p PATTERN [-r RENAME]
+usage: renamer [-h] [-d DIRECTORY] -p PATTERN [-r RENAME] [-i] [-n] [-m MAX_DIGITS]
 
 options:
   -h, --help            show this help message and exit
   -d DIRECTORY, --directory DIRECTORY
                         Path to batch rename dir
   -p PATTERN, --pattern PATTERN
-                        Pattern of renaming. E.g. Real_Humans_-
-                        _Echte_Menschen_-_Staffel_{season}_({episode}_10).mp4
+                        Pattern of renaming. E.g. Real_Humans_-_Echte_Menschen_-
+                        _Staffel_{season:2d}_({episode:2d}_10).mp4
   -r RENAME, --rename RENAME
-                        Rename into pattern. E.g.
-                        Real_Humans_S{season}E{episode}.mp4
+                        Rename into pattern. E.g. S{season}E{episode}_Real_Humans.mp4
+  -i, --no-integer      depreciated - no longer useful
+  -n, --no-action       just print what would be renamed
+  -m MAX_DIGITS, --max-digits MAX_DIGITS
+                        set max digits
+

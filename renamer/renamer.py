@@ -34,7 +34,7 @@ class renamer:
                 else:
                     max_digits = int(self.args['max_digits'])
                     
-                parsed = {k: f"{{:0{max_digits}d}}".format(int(v)) if v.isdigit() else v for k, v in parsed.items()}
+                parsed = {k: f"{{:0{max_digits}d}}".format(int(v)) if str(v).isdigit() else v for k, v in parsed.items()}
 
                 basename_new = self.args['rename'].format(**parsed)
                 new_file_path = os.path.join(dirname,basename_new)
@@ -51,8 +51,8 @@ def main(headless=True):
             
     parser = argparse.ArgumentParser()
     parser.add_argument("-d", "--directory", type=dir_file, help="Path to batch rename dir", default=os.path.join(os.getcwd()))
-    parser.add_argument("-p", "--pattern", help='Pattern of renaming. E.g. Real_Humans_-_Echte_Menschen_-_Staffel_{season}_({episode}_10).mp4', type=str, required=True)
-    parser.add_argument("-r", "--rename", help='Rename into pattern. E.g. Real_Humans_S{season}E{episode}.mp4', type=str, default=None)
+    parser.add_argument("-p", "--pattern", help='Pattern of renaming. E.g. Real_Humans_-_Echte_Menschen_-_Staffel_{season:2d}_({episode:2d}_10).mp4', type=str, required=True)
+    parser.add_argument("-r", "--rename", help='Rename into pattern. E.g. S{season}E{episode}_Real_Humans.mp4', type=str, default=None)
     parser.add_argument("-i", "--no-integer", help="depreciated - no longer useful", action="store_false")
     parser.add_argument("-n", "--no-action", help="just print what would be renamed", action="store_true")
     parser.add_argument("-m", "--max-digits", help='set max digits', type=int, default=None)
