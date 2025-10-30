@@ -16,7 +16,8 @@ setup(
     packages=find_packages(),
     install_requires=[
         "argparse",
-        "glob2",
+        "python-slugify",
+        "parse",
     ],
     classifiers=[
         'Development Status :: 1 - Planning',
